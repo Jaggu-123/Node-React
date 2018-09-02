@@ -1,5 +1,12 @@
 const express = require('express');
-require('./services/passport');
+const mongoose = require('mongoose');
+
+// Files we needed from our project in this file//
+const keys = require('./config/keys');
+require('./models/Users');                  //models file will be first imported than services file 
+require('./services/passport');             //beacuse passport.js is using models/Users in it
+
+mongoose.connect(keys.mongoURI);        
 
 const app = express();
 
