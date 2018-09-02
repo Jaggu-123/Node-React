@@ -5,6 +5,18 @@ const mongoose = require('mongoose');
 const keys = require('../config/keys');
 const User = mongoose.model('users');
 
+//we  are making the function to encrypt the profile.id 
+passport.serializeUser((user, done) => {
+    done(null, user.id);                    //here user.id is the unique id which mongoDB give to each record we save
+});
+
+// we are making the function to decrypt the user.id
+passport.deserializeUser((id, done) => {
+    User.findById(id).then(user => {
+        done(null, user);
+    })
+})
+
 // we are making a new instance for authentication with google
 passport.use(
     new GoogleStrategy({
